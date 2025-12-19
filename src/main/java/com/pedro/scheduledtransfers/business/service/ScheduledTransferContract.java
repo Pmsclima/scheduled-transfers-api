@@ -6,4 +6,6 @@ import com.pedro.scheduledtransfers.dto.response.ScheduledTransferResponse;
 public interface ScheduledTransferContract {
 
     ScheduledTransferResponse create(final ScheduledTransferRequest scheduledTransferRequest);
+
+    ScheduledTransferResponse getById(final Long id);
 }

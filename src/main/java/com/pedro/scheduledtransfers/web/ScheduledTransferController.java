@@ -6,6 +6,7 @@ import com.pedro.scheduledtransfers.dto.response.ScheduledTransferResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,5 +22,10 @@ public class ScheduledTransferController {
             @Valid @RequestBody final ScheduledTransferRequest scheduledTransferRequest
     ) {
         return scheduledTransferContract.create(scheduledTransferRequest);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ScheduledTransferResponse> getById(@PathVariable final Long id) {
+        return new ResponseEntity<>(scheduledTransferContract.getById(id), HttpStatus.OK);
     }
 }
