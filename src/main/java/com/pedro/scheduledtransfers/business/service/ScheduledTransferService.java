@@ -38,7 +38,7 @@ public class ScheduledTransferService implements ScheduledTransferContract {
         scheduledTransferEntity.setFee(feeResult.fee());
         scheduledTransferEntity.setTotalAmount(feeResult.totalAmount());
 
-        ScheduledTransferEntity savedScheduledTransferEntity =
+       final ScheduledTransferEntity savedScheduledTransferEntity =
                 scheduledTransferRepository.save(scheduledTransferEntity);
         return scheduledTransferMapper.toResponse(savedScheduledTransferEntity);
     }
@@ -68,5 +68,26 @@ public class ScheduledTransferService implements ScheduledTransferContract {
                 scheduledTransferEntityPage.getTotalElements(),
                 scheduledTransferEntityPage.getTotalPages()
         );
+    }
+
+    @Override
+    public ScheduledTransferResponse update(
+            final Long id,
+            final ScheduledTransferRequest scheduledTransferRequest
+    ) {
+        final ScheduledTransferEntity scheduledTransferEntity = scheduledTransferRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+
+        scheduledTransferMapper.updateEntityFromRequest(scheduledTransferRequest, scheduledTransferEntity);
+
+       final FeeResult feeResult = feeCalculator.calculate(
+               scheduledTransferEntity.getAmount(),
+               scheduledTransferEntity.getScheduleDate()
+       );
+        scheduledTransferEntity.setFee(feeResult.fee());
+
+        final ScheduledTransferEntity savedScheduledTransferEntity = scheduledTransferRepository.save(scheduledTransferEntity);
+
+        return scheduledTransferMapper.toResponse(savedScheduledTransferEntity);
     }
 }

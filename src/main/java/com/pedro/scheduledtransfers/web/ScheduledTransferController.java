@@ -38,4 +38,12 @@ public class ScheduledTransferController {
     ) {
         return new ResponseEntity<>(scheduledTransferContract.getAll(pageable), HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ScheduledTransferResponse> update(
+            @PathVariable final Long id,
+            @Valid @RequestBody final ScheduledTransferRequest scheduledTransferRequest
+    ) {
+        return new ResponseEntity<>(scheduledTransferContract.update(id, scheduledTransferRequest), HttpStatus.OK);
+    }
 }
