@@ -12,4 +12,9 @@ public interface ScheduledTransferContract {
     ScheduledTransferResponse getById(final Long id);
 
     PaginationResponse<ScheduledTransferResponse> getAll(final Pageable pageable);
+
+    ScheduledTransferResponse update(
+            final Long id,
+            final  ScheduledTransferRequest scheduledTransferRequest
+    );
 }
