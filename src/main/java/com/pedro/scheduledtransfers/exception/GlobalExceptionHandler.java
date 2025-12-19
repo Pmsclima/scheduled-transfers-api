@@ -57,12 +57,4 @@ public class GlobalExceptionHandler {
 
         return pd;
     }
-
-    @ExceptionHandler(Exception.class)
-    public ProblemDetail handleUnexpected(Exception ex) {
-        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-        pd.setTitle("Internal error");
-        pd.setDetail("Unexpected internal error");
-        return pd;
-    }
 }
