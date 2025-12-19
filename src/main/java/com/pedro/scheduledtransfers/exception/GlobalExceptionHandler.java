@@ -1,6 +1,7 @@
 package com.pedro.scheduledtransfers.exception;
 
 import com.pedro.scheduledtransfers.exception.exceptions.FeeRuleNotApplicableException;
+import com.pedro.scheduledtransfers.exception.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -43,6 +44,15 @@ public class GlobalExceptionHandler {
     public ProblemDetail handleFeeRuleNotApplicable(FeeRuleNotApplicableException ex) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         pd.setTitle("Fee rule not applicable");
+        pd.setDetail(ex.getMessage());
+
+        return pd;
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ProblemDetail handleNotFound(ResourceNotFoundException ex) {
+        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        pd.setTitle("Resource not found");
         pd.setDetail(ex.getMessage());
 
         return pd;

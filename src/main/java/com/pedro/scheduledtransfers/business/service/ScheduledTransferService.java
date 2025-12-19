@@ -4,6 +4,7 @@ import com.pedro.scheduledtransfers.business.fee.FeeCalculator;
 import com.pedro.scheduledtransfers.business.fee.FeeResult;
 import com.pedro.scheduledtransfers.dto.request.ScheduledTransferRequest;
 import com.pedro.scheduledtransfers.dto.response.ScheduledTransferResponse;
+import com.pedro.scheduledtransfers.exception.exceptions.ResourceNotFoundException;
 import com.pedro.scheduledtransfers.mapper.ScheduledTransferMapper;
 import com.pedro.scheduledtransfers.persistence.entity.ScheduledTransferEntity;
 import com.pedro.scheduledtransfers.persistence.repository.ScheduledTransferRepository;
@@ -35,5 +36,13 @@ public class ScheduledTransferService implements ScheduledTransferContract {
         ScheduledTransferEntity savedScheduledTransferEntity =
                 scheduledTransferRepository.save(scheduledTransferEntity);
         return scheduledTransferMapper.toResponse(savedScheduledTransferEntity);
+    }
+
+    @Override
+    public ScheduledTransferResponse getById(Long id) {
+        ScheduledTransferEntity scheduledTransferEntity = scheduledTransferRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+
+        return scheduledTransferMapper.toResponse(scheduledTransferEntity);
     }
 }
