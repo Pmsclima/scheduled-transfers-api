@@ -90,4 +90,12 @@ public class ScheduledTransferService implements ScheduledTransferContract {
 
         return scheduledTransferMapper.toResponse(savedScheduledTransferEntity);
     }
+
+    @Override
+    public void delete(Long id) {
+        final ScheduledTransferEntity scheduledTransferEntity = scheduledTransferRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
+
+        scheduledTransferRepository.delete(scheduledTransferEntity);
+    }
 }

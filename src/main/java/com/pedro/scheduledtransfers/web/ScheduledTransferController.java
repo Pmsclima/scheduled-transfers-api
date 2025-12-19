@@ -46,4 +46,10 @@ public class ScheduledTransferController {
     ) {
         return new ResponseEntity<>(scheduledTransferContract.update(id, scheduledTransferRequest), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete( @PathVariable final Long id) {
+        scheduledTransferContract.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

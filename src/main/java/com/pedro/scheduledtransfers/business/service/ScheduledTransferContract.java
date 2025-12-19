@@ -17,4 +17,6 @@ public interface ScheduledTransferContract {
             final Long id,
             final  ScheduledTransferRequest scheduledTransferRequest
     );
+
+    void delete(final Long id);
 }
